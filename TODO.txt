@@ -1,0 +1,13 @@
+TODO
+====
+*create threejs viewer
+-takes video types (180, 360; TB, LR, etc)
+-and displays on 180dome
+-rotation controls for selecting video element
+*live feed
+-WebGL shader transform into right format
+-then can just connect to suitable HDMI source
+-with controls that show up on screen
+-eventually possible to do on
+*conversion script
+-converts to right format needed by dome
