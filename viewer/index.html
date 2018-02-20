@@ -28,20 +28,30 @@ var renderer = new THREE.WebGLRenderer({
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-var texture = new THREE.TextureLoader().load( '/output/003e6fc95c60.png' );
+var texture = new THREE.TextureLoader().load( 'textures/uv-grid.jpg' );
 var material = new THREE.MeshBasicMaterial( { map: texture } );
 
-var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-var cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+var container = new THREE.Object3D();
 
-camera.position.z = 1.5;
+//SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength)
+var geometry = new THREE.SphereGeometry( 1, 16, 16, 0, Math.PI );
+var hemisphere = new THREE.Mesh( geometry, material );
+container.add( hemisphere );
+
+var material2 = new THREE.MeshBasicMaterial( { wireframe: true } );
+var geometry2 = new THREE.SphereGeometry( 1-0.005, 16, 16, 0, Math.PI );
+var hemisphere2 = new THREE.Mesh( geometry2, material2 );
+container.add( hemisphere2 );
+
+scene.add( container );
+
+camera.position.z = 2;
 
 function animate() {
   window.requestAnimationFrame( animate );
 
   //cube.rotation.x += 0.1;
-  cube.rotation.y += 0.007;
+  container.rotation.y += 0.007;
 
   renderer.render( scene, camera );
 }
