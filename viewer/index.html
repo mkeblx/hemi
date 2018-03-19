@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   <title>Viewer</title>
 <style>
 body {
@@ -22,6 +23,7 @@ canvas {
 var scene;
 var camera;
 var renderer;
+
 var container;
 
 function init() {
@@ -34,10 +36,17 @@ function init() {
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
 
+  container = new THREE.Object3D();
+  scene.add( container );
+
+  addDisplay();
+
+  camera.position.z = 2;
+}
+
+function addDisplay() {
   var texture = new THREE.TextureLoader().load( 'textures/uv-grid.jpg' );
   var material = new THREE.MeshBasicMaterial( { map: texture } );
-
-  container = new THREE.Object3D();
 
   //SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength)
   var geometry = new THREE.SphereGeometry( 1, 16, 16, 0, Math.PI );
@@ -53,13 +62,9 @@ function init() {
 
   var hemisphere2 = new THREE.Mesh( geometry2, material2 );
   container.add( hemisphere2 );
-
-  scene.add( container );
-
-  camera.position.z = 2;
 }
 
-function animate() {
+function animate( t ) {
   window.requestAnimationFrame( animate );
 
   //cube.rotation.x += 0.1;
